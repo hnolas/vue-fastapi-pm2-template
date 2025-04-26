@@ -55,7 +55,7 @@ class Settings(BaseSettings):
             password=values.data["POSTGRES_PASSWORD"],
             host=values.data["POSTGRES_SERVER"],
             port=int(values.data["POSTGRES_PORT"]),
-            path=f"/{values.data['POSTGRES_DB']}",
+            path=f"{values.data['POSTGRES_DB']}",
         )
 
     ALGORITHM: str = "HS256"

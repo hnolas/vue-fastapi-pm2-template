@@ -1,20 +1,9 @@
 import os
-from dotenv import load_dotenv
-
-# Load environment variables early
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
-load_dotenv(dotenv_path)
-
-# Debug print (optional)
-print("Loaded PGUSER:", os.getenv("PGUSER"))
-print("Loaded PGPASSWORD:", os.getenv("PGPASSWORD"))
-
 import secrets
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic import AnyHttpUrl, PostgresDsn, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings
-
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api"
@@ -68,10 +57,9 @@ class Settings(BaseSettings):
     
     DROPBOX_ACCESS_TOKEN: str = os.getenv("DROPBOX_ACCESS_TOKEN", "")
     FITBIT_DATA_EXPORT_PATH: str = os.getenv("FITBIT_DATA_EXPORT_PATH", "/fitbit_data")
-    
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
 
+    class Config:
+        env_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
+        case_sensitive = True
 
 settings = Settings()

@@ -4,14 +4,14 @@ import random
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 
-from app.db import async_session
+from app.db import async_session_maker
 from app.models.participant import Participant
 from app.models.message import MessageContent, Message
 
 async def create_sample_data():
     """Add sample data to the database for testing"""
     
-    async with async_session() as db:
+    async with async_session_maker() as db:
         # First check if we already have participants
         result = await db.execute(select(func.count()).select_from(Participant))
         count = result.scalar()

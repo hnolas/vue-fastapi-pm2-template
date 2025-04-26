@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+# Load .env from two levels up (backend/.env)
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
 load_dotenv(dotenv_path)
 import secrets
 from typing import Any, Dict, List, Optional, Union

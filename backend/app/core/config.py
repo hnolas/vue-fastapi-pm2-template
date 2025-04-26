@@ -37,17 +37,18 @@ class Settings(BaseSettings):
 
     @field_validator("DATABASE_URI", mode="before")
     @classmethod
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+    def assemble_db_connection(cls, v: Optional[str], values: ValidationInfo) -> Any:
         if isinstance(v, str):
             return v
         return PostgresDsn.build(
             scheme="postgresql+asyncpg",
-            username=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
-            port=int(values.get("POSTGRES_PORT")),
-            path=f"{values.get('POSTGRES_DB') or ''}",
+            username=values.data["POSTGRES_USER"],
+            password=values.data["POSTGRES_PASSWORD"],
+            host=values.data["POSTGRES_SERVER"],
+            port=int(values.data["POSTGRES_PORT"]),
+            path=f"/{values.data['POSTGRES_DB']}"  # important to have leading /
         )
+
 
     # JWT
     ALGORITHM: str = "HS256"

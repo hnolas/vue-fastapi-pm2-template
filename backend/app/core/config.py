@@ -14,7 +14,9 @@ print("✅ PGPASSWORD:", os.getenv("PGPASSWORD"))
 # Now continue imports
 import secrets
 from typing import Any, Dict, List, Optional, Union
-from pydantic import BaseSettings, PostgresDsn, AnyHttpUrl, field_validator, ValidationInfo
+from pydantic_settings import BaseSettings
+from pydantic import PostgresDsn, AnyHttpUrl, field_validator, ValidationInfo
+
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api"

@@ -31,6 +31,10 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     PROJECT_NAME: str = "Participant Management Interface & Fitbit Data Integration System"
+
+    print("POSTGRES_SERVER: ", os.getenv("PGHOST","localhost"))
+    print("POSTGRES_USER: ", os.getenv("PGUSER","postgres"))
+    print("POSTGRES_PASSWORD: ", os.getenv("PGPASSWORD","postgres"))
     
     # Database
     POSTGRES_SERVER: str = os.getenv("PGHOST", "localhost")

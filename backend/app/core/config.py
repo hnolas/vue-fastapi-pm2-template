@@ -42,11 +42,11 @@ class Settings(BaseSettings):
             return v
         return PostgresDsn.build(
             scheme="postgresql+asyncpg",
-            username=values.data.get("POSTGRES_USER"),
-            password=values.data.get("POSTGRES_PASSWORD"),
-            host=values.data.get("POSTGRES_SERVER"),
-            port=int(values.data.get("POSTGRES_PORT")),
-            path=f"{values.data.get('POSTGRES_DB') or ''}",
+            username=values.get("POSTGRES_USER"),
+            password=values.get("POSTGRES_PASSWORD"),
+            host=values.get("POSTGRES_SERVER"),
+            port=int(values.get("POSTGRES_PORT")),
+            path=f"{values.get('POSTGRES_DB') or ''}",
         )
 
     # JWT

@@ -1,7 +1,6 @@
+import os
 from dotenv import load_dotenv
 load_dotenv(".env")
-
-import os
 import secrets
 from typing import Any, Dict, List, Optional, Union
 

@@ -1,9 +1,20 @@
 import os
+from dotenv import load_dotenv
+
+# 🛠 Load .env file first, from 3 levels up
+dotenv_path = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../../..", ".env")
+)
+load_dotenv(dotenv_path)
+
+print("✅ .env loaded from:", dotenv_path)
+print("✅ PGUSER:", os.getenv("PGUSER"))
+print("✅ PGPASSWORD:", os.getenv("PGPASSWORD"))
+
+# Now continue imports
 import secrets
 from typing import Any, Dict, List, Optional, Union
-
-from pydantic import AnyHttpUrl, PostgresDsn, ValidationInfo, field_validator
-from pydantic_settings import BaseSettings
+from pydantic import BaseSettings, PostgresDsn, AnyHttpUrl, field_validator, ValidationInfo
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api"
@@ -21,9 +32,9 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
-    PROJECT_NAME: str = "Participant Management Interface & Fitbit Data Integration System"
-    
-    # Database
+    PROJECT_NAME: str = "Participant Management Interface"
+
+    # 🛠 Now these env vars will be read properly
     POSTGRES_SERVER: str = os.getenv("PGHOST", "localhost")
     POSTGRES_USER: str = os.getenv("PGUSER", "postgres")
     POSTGRES_PASSWORD: str = os.getenv("PGPASSWORD", "postgres")
@@ -51,15 +62,15 @@ class Settings(BaseSettings):
     TWILIO_AUTH_TOKEN: str = os.getenv("TWILIO_AUTH_TOKEN", "")
     TWILIO_PHONE_NUMBER: str = os.getenv("TWILIO_PHONE_NUMBER", "")
     EXTERNAL_BASE_URL: str = os.getenv("EXTERNAL_BASE_URL", "http://localhost:8000")
-    
+
     FITBIT_CLIENT_ID: str = os.getenv("FITBIT_CLIENT_ID", "")
     FITBIT_CLIENT_SECRET: str = os.getenv("FITBIT_CLIENT_SECRET", "")
-    
+
     DROPBOX_ACCESS_TOKEN: str = os.getenv("DROPBOX_ACCESS_TOKEN", "")
     FITBIT_DATA_EXPORT_PATH: str = os.getenv("FITBIT_DATA_EXPORT_PATH", "/fitbit_data")
 
     class Config:
-        env_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
         case_sensitive = True
 
+# 🛠 Create instance AFTER loading .env
 settings = Settings()

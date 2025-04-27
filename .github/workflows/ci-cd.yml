@@ -1,4 +1,4 @@
-name: Simple CI/CD Pipeline
+name: Full CI/CD Pipeline
 
 on:
   push:
@@ -19,31 +19,32 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Deploy code via SSH
+    - name: Deploy to EC2 Server
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
           set -e
-          echo "Switching to project directory..."
-          cd /opt/pmi-fitbit-sms
+          
+          echo "✅ Switching to project directory..."
+          cd /opt/app/vue-fastapi-pm2-template
 
-          echo "Pulling latest changes..."
+          echo "✅ Pulling latest changes from main..."
           git pull origin main
 
-          echo "Building frontend..."
+          echo "✅ Building frontend..."
           cd frontend
           npm install
           npm run build
 
-          echo "Updating backend..."
+          echo "✅ Restarting frontend with PM2..."
+          pm2 restart pmi-frontend || pm2 start ecosystem.config.cjs
+
+          echo "✅ Updating backend..."
           cd ../backend
           source venv/bin/activate
           pip install -r requirements.txt
 
-          echo "Restarting backend service..."
+          echo "✅ Restarting backend service..."
           sudo systemctl restart pmi-backend
 
-          echo "Restarting frontend with PM2..."
-          pm2 restart pmi-frontend || pm2 start ecosystem.config.js
-
-          echo "Deployment finished successfully."
+          echo "🎉 Deployment completed successfully!"
         EOF

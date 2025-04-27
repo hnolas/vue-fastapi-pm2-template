@@ -1,7 +1,7 @@
 from app.core.config import settings
 
 # DEBUG: Print what DATABASE_URI we are using
-print("🚀 Connecting to database with URL:", settings.DATABASE_URI)
+#print("🚀 Connecting to database with URL:", settings.DATABASE_URI)
 
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker

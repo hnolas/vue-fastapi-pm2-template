@@ -269,7 +269,7 @@ npm install
 npm run build
 
 # Create a PM2 configuration file
-cat > ecosystem.config.js << 'EOL'
+cat > ecosystem.config.cjs << 'EOL'
 module.exports = {
   apps: [{
     name: "pmi-frontend",
@@ -284,7 +284,7 @@ module.exports = {
 EOL
 
 # Start the frontend with PM2
-pm2 start ecosystem.config.js
+pm2 start ecosystem.config.cjs
 
 # Save the PM2 configuration to run on system startup
 pm2 save

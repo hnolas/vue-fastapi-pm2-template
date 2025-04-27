@@ -2,7 +2,7 @@
   <div class="fitbit-registration">
     <div class="card">
       <div class="card-header mb-3">
-        <h2 class="card-title">Fitbit Registration</h2>
+        <h2 class="card-title">Fitbit Registration Form</h2>
         <div class="flex gap-2">
           <button @click="refreshFitbitData" class="btn btn-outline">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" 
